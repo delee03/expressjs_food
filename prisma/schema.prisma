@@ -20,12 +20,12 @@ model likes {
   user_id     Int
   res_id      Int
   date_like   DateTime    @default(now()) @db.DateTime(0)
-  users       users       @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade, map: "likes_ibfk_1")
-  restaurants restaurants @relation(fields: [res_id], references: [res_id], onDelete: Cascade, onUpdate: Cascade, map: "likes_ibfk_2")
-  
-  
+  users       users       @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "likes_ibfk_1")
+  restaurants restaurants @relation(fields: [res_id], references: [res_id], onDelete: Cascade, map: "likes_ibfk_2")
+
   @@id([user_id, res_id])
   @@index([res_id], map: "res_id")
+  @@index([user_id], map: "user_id")
 }
 
 model orders {
@@ -43,7 +43,7 @@ model rate_res {
   user_id     Int
   res_id      Int
   amount      Int?
-  date_rate   String?     @db.VarChar(255)
+  date_rate   DateTime    @default(now()) @db.DateTime(0)
   users       users       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "rate_res_ibfk_1")
   restaurants restaurants @relation(fields: [res_id], references: [res_id], onDelete: NoAction, onUpdate: NoAction, map: "rate_res_ibfk_2")
 
